@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Response Teams
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        EMERGENCY RESPONSE
+    </p>
+
+    <h1>
+        Response Teams
+    </h1>
+
+    <p>
+        Emergency teams available for disaster response.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="cards-grid">
+
+
+        {% for team in teams %}
+
+
+        <div class="team-card">
+
+
+            <div class="card-large-icon">
+                🚑
+            </div>
+
+
+            <h2>
+                {{ team["name"] }}
+            </h2>
+
+
+            <p>
+                {{ team["team_type"] }}
+            </p>
+
+
+            <p>
+                📍 {{ team["location"] }}
+            </p>
+
+
+            <span class="team-status">
+
+                {{ team["status"] }}
+
+            </span>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

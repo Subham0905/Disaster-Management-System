@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Emergency Alerts
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        LIVE INFORMATION
+    </p>
+
+    <h1>
+        Emergency Alerts
+    </h1>
+
+    <p>
+        Important disaster warnings and emergency instructions.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="large-alert-list">
+
+
+        {% for alert in alerts %}
+
+
+        <div class="large-alert">
+
+
+            <div>
+
+                <span class="
+                    severity
+                    {{ alert['severity']|lower }}
+                ">
+
+                    {{ alert["severity"] }}
+
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    {{ alert["title"] }}
+                </h2>
+
+                <p>
+                    {{ alert["message"] }}
+                </p>
+
+                <small>
+
+                    📍 {{ alert["location"] }}
+
+                    |
+
+                    {{ alert["created_at"] }}
+
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="empty-box">
+
+            No emergency alerts are available.
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

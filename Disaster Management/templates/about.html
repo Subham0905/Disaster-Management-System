@@ -1,0 +1,648 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+About | Disaster Management System
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="landing-hero">
+
+
+    <div class="landing-content">
+
+
+        <div class="landing-badge">
+
+            DISASTER MANAGEMENT SYSTEM
+
+        </div>
+
+
+        <h1>
+
+            Improving Communication &
+            Coordination During Disasters
+
+        </h1>
+
+
+        <p class="landing-description">
+
+            A centralized digital platform designed to
+            improve disaster preparedness, emergency
+            communication, incident reporting and
+            response coordination.
+
+        </p>
+
+
+        <div class="landing-buttons">
+
+
+            <a
+                href="{{ url_for('login') }}"
+                class="landing-btn login-btn"
+            >
+
+                Login
+
+            </a>
+
+
+            <a
+                href="{{ url_for('register') }}"
+                class="landing-btn register-btn"
+            >
+
+                Register
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="landing-visual">
+
+
+        <div class="visual-card">
+
+
+            <div class="visual-header">
+
+                <strong>
+                    Emergency Response
+                </strong>
+
+                <span>
+                    ● System Ready
+                </span>
+
+            </div>
+
+
+            <div class="visual-icon">
+                ⚠️
+            </div>
+
+
+            <h2>
+                Disaster Management
+            </h2>
+
+
+            <p>
+
+                One centralized platform for
+                emergency communication and
+                coordination.
+
+            </p>
+
+
+            <div class="visual-items">
+
+
+                <div>
+
+                    <span>📢</span>
+
+                    <small>
+                        Emergency Alerts
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>📍</span>
+
+                    <small>
+                        Incident Reporting
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>🚑</span>
+
+                    <small>
+                        Response Teams
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>🏠</span>
+
+                    <small>
+                        Safe Shelters
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INTRODUCTION
+===================================================== -->
+
+<section class="landing-section">
+
+
+    <div class="landing-title">
+
+        <span>
+            INTRODUCTION
+        </span>
+
+        <h2>
+            About the Website
+        </h2>
+
+    </div>
+
+
+    <div class="introduction-box">
+
+
+        <p>
+
+            Disasters such as floods, cyclones,
+            earthquakes, fires and landslides can cause
+            serious loss of life, property and
+            infrastructure.
+
+        </p>
+
+
+        <p>
+
+            During a disaster, timely communication and
+            proper coordination are essential. Delays in
+            receiving information or deploying emergency
+            resources can increase the impact of a disaster.
+
+        </p>
+
+
+        <p>
+
+            The Disaster Management System provides a
+            centralized digital platform that connects
+            citizens, administrators and emergency response
+            teams.
+
+        </p>
+
+
+        <p>
+
+            Through this platform, users can report
+            incidents, receive emergency alerts, find
+            shelters and access information about response
+            teams and relief resources.
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GOALS
+===================================================== -->
+
+<section class="landing-section gray-section">
+
+
+    <div class="landing-title">
+
+        <span>
+            GOALS
+        </span>
+
+        <h2>
+            Goals of the Website
+        </h2>
+
+    </div>
+
+
+    <div class="goal-grid">
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    Faster Communication
+                </h3>
+
+                <p>
+                    Provide timely emergency information
+                    and disaster alerts.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    Incident Reporting
+                </h3>
+
+                <p>
+                    Allow citizens to report emergency
+                    incidents quickly and accurately.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    Better Coordination
+                </h3>
+
+                <p>
+                    Improve coordination between citizens,
+                    administrators and response teams.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    Resource Management
+                </h3>
+
+                <p>
+                    Efficiently manage shelters, teams
+                    and emergency resources.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                05
+            </div>
+
+            <div>
+
+                <h3>
+                    Disaster Preparedness
+                </h3>
+
+                <p>
+                    Improve community preparedness through
+                    useful disaster information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="goal-card">
+
+            <div class="goal-number">
+                06
+            </div>
+
+            <div>
+
+                <h3>
+                    Better Decision Making
+                </h3>
+
+                <p>
+                    Provide organized information to support
+                    faster emergency decisions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     VISION & MISSION
+===================================================== -->
+
+<section class="landing-section">
+
+
+    <div class="landing-title">
+
+        <span>
+            OUR DIRECTION
+        </span>
+
+        <h2>
+            Vision & Mission Statement
+        </h2>
+
+    </div>
+
+
+    <div class="vision-mission">
+
+
+        <div class="vision-card">
+
+
+            <div class="vm-icon">
+                👁️
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Vision
+                </h3>
+
+
+                <p>
+
+                    To create a reliable, accessible and
+                    technology-driven disaster management
+                    platform that enables communities and
+                    emergency organizations to respond
+                    quickly and effectively to disaster
+                    situations.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="mission-card">
+
+
+            <div class="vm-icon">
+                🎯
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Mission
+                </h3>
+
+
+                <p>
+
+                    Our mission is to improve disaster
+                    preparedness, communication and
+                    coordination by providing a centralized
+                    platform for incident reporting,
+                    emergency alerts, resource management
+                    and emergency response.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="landing-section gray-section">
+
+
+    <div class="landing-title">
+
+        <span>
+            PLATFORM
+        </span>
+
+        <h2>
+            What the Website Provides
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+
+            <div>📢</div>
+
+            <h3>
+                Emergency Alerts
+            </h3>
+
+            <p>
+                View important warnings and emergency
+                instructions.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div>📝</div>
+
+            <h3>
+                Incident Reporting
+            </h3>
+
+            <p>
+                Report floods, cyclones, fires and
+                other emergencies.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div>🏠</div>
+
+            <h3>
+                Safe Shelters
+            </h3>
+
+            <p>
+                Find designated emergency shelters
+                and relief centres.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div>🚑</div>
+
+            <h3>
+                Response Teams
+            </h3>
+
+            <p>
+                Access information about emergency
+                response teams.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CALL TO ACTION
+===================================================== -->
+
+<section class="landing-cta">
+
+
+    <div>
+
+        <span>
+            DISASTER RESPONSE PLATFORM
+        </span>
+
+        <h2>
+            Get Started With the System
+        </h2>
+
+        <p>
+
+            Login to your account or register as a
+            new user to access the Disaster Management
+            System.
+
+        </p>
+
+    </div>
+
+
+    <div class="landing-buttons">
+
+
+        <a
+            href="{{ url_for('login') }}"
+            class="landing-btn login-btn"
+        >
+
+            Login
+
+        </a>
+
+
+        <a
+            href="{{ url_for('register') }}"
+            class="landing-btn register-btn"
+        >
+
+            Register
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Emergency Shelters
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        RELIEF SUPPORT
+    </p>
+
+    <h1>
+        Emergency Shelters
+    </h1>
+
+    <p>
+        Designated safe locations for evacuation and relief.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="cards-grid">
+
+
+        {% for shelter in shelters %}
+
+
+        <div class="shelter-card">
+
+
+            <div class="card-large-icon">
+                🏠
+            </div>
+
+
+            <h2>
+                {{ shelter["name"] }}
+            </h2>
+
+
+            <p>
+                📍 {{ shelter["location"] }}
+            </p>
+
+
+            <div class="capacity">
+
+
+                <div>
+
+                    <small>
+                        Capacity
+                    </small>
+
+                    <strong>
+                        {{ shelter["capacity"] }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Available
+                    </small>
+
+                    <strong class="available">
+                        {{ shelter["available"] }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Admin Monitoring
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        ADMINISTRATION
+    </p>
+
+    <h1>
+        Admin Monitoring
+    </h1>
+
+    <p>
+        Manage emergency alerts, incidents and users.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     CREATE ALERT
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-heading">
+
+        <p>
+            EMERGENCY COMMUNICATION
+        </p>
+
+        <h2>
+            Create Emergency Alert
+        </h2>
+
+    </div>
+
+
+    <div class="form-card">
+
+
+        <form
+            method="POST"
+            action="{{ url_for('create_alert') }}"
+        >
+
+
+            <div class="form-grid">
+
+
+                <div class="full">
+
+                    <label>
+                        Alert Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Example: Cyclone Warning"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Severity
+                    </label>
+
+                    <select
+                        name="severity"
+                        required
+                    >
+
+                        <option value="">
+                            Select Severity
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Example: Puri, Odisha"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>
+                        Alert Message
+                    </label>
+
+                    <textarea
+                        name="message"
+                        rows="5"
+                        placeholder="Enter emergency instructions..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn emergency-btn"
+            >
+
+                🚨 Publish Emergency Alert
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     EXISTING ALERTS
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-heading">
+
+        <p>
+            ALERT HISTORY
+        </p>
+
+        <h2>
+            Published Alerts
+        </h2>
+
+    </div>
+
+
+    <div class="large-alert-list">
+
+
+        {% for alert in alerts %}
+
+
+        <div class="large-alert">
+
+
+            <div>
+
+                <span class="
+                    severity
+                    {{ alert['severity']|lower }}
+                ">
+
+                    {{ alert["severity"] }}
+
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    {{ alert["title"] }}
+                </h2>
+
+                <p>
+                    {{ alert["message"] }}
+                </p>
+
+                <small>
+
+                    📍 {{ alert["location"] }}
+
+                    |
+
+                    {{ alert["created_at"] }}
+
+                </small>
+
+
+                <!-- REMOVE ALERT -->
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'delete_alert',
+                        alert_id=alert['id']
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Are you sure you want to remove this alert?'
+                    );"
+                >
+
+                    <button
+                        type="submit"
+                        class="small-btn"
+                    >
+
+                        Remove Alert
+
+                    </button>
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="large-alert">
+
+            <p>
+                No emergency alerts available.
+            </p>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INCIDENT MANAGEMENT
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-heading">
+
+        <p>
+            INCIDENT MANAGEMENT
+        </p>
+
+        <h2>
+            All Reported Incidents
+        </h2>
+
+    </div>
+
+
+    <div class="table-container">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Type</th>
+
+                    <th>Location</th>
+
+                    <th>Severity</th>
+
+                    <th>Reported By</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for incident in incidents %}
+
+
+                <tr>
+
+
+                    <td>
+                        #{{ incident["id"] }}
+                    </td>
+
+
+                    <td>
+                        {{ incident["incident_type"] }}
+                    </td>
+
+
+                    <td>
+                        {{ incident["location"] }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="
+                            severity
+                            {{ incident['severity']|lower }}
+                        ">
+
+                            {{ incident["severity"] }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ incident["reported_by"] }}
+                    </td>
+
+
+                    <td>
+                        {{ incident["status"] }}
+                    </td>
+
+
+                    <td>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'update_status',
+                                incident_id=incident['id']
+                            ) }}"
+                        >
+
+
+                            <select name="status">
+
+
+                                <option
+                                    value="Pending"
+
+                                    {% if incident["status"] == "Pending" %}
+                                    selected
+                                    {% endif %}
+                                >
+
+                                    Pending
+
+                                </option>
+
+
+                                <option
+                                    value="In Progress"
+
+                                    {% if incident["status"] == "In Progress" %}
+                                    selected
+                                    {% endif %}
+                                >
+
+                                    In Progress
+
+                                </option>
+
+
+                                <option
+                                    value="Resolved"
+
+                                    {% if incident["status"] == "Resolved" %}
+                                    selected
+                                    {% endif %}
+                                >
+
+                                    Resolved
+
+                                </option>
+
+
+                            </select>
+
+
+                            <button
+                                type="submit"
+                                class="small-btn"
+                            >
+
+                                Update
+
+                            </button>
+
+
+                        </form>
+
+
+                    </td>
+
+
+                </tr>
+
+
+                {% else %}
+
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty"
+                    >
+
+                        No incidents reported.
+
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     USERS
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-heading">
+
+        <p>
+            USER MANAGEMENT
+        </p>
+
+        <h2>
+            Registered Users
+        </h2>
+
+    </div>
+
+
+    <div class="table-container">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for user in users %}
+
+
+                <tr>
+
+                    <td>
+                        {{ user["id"] }}
+                    </td>
+
+                    <td>
+                        {{ user["name"] }}
+                    </td>
+
+                    <td>
+                        {{ user["email"] }}
+                    </td>
+
+                    <td>
+                        {{ user["role"] }}
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

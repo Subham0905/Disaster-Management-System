@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Incidents | Disaster Management System
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        INCIDENT MANAGEMENT
+    </p>
+
+    <h1>
+        Reported Incidents
+    </h1>
+
+    <p>
+        View disaster and emergency incidents.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="table-container">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Type</th>
+
+                    <th>Location</th>
+
+                    <th>Severity</th>
+
+                    <th>Reported By</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for incident in incidents %}
+
+
+                <tr>
+
+                    <td>
+                        #{{ incident["id"] }}
+                    </td>
+
+                    <td>
+                        {{ incident["incident_type"] }}
+                    </td>
+
+                    <td>
+                        {{ incident["location"] }}
+                    </td>
+
+                    <td>
+
+                        <span class="
+                            severity
+                            {{ incident['severity']|lower }}
+                        ">
+
+                            {{ incident["severity"] }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+                        {{ incident["reported_by"] }}
+                    </td>
+
+                    <td>
+                        {{ incident["status"] }}
+                    </td>
+
+                    <td>
+                        {{ incident["created_at"] }}
+                    </td>
+
+                </tr>
+
+
+                {% else %}
+
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty"
+                    >
+
+                        No incidents reported.
+
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

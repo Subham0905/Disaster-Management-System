@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Dashboard | Disaster Management System
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="dashboard-hero">
+
+
+    <div>
+
+        <p class="eyebrow">
+            DISASTER RESPONSE PLATFORM
+        </p>
+
+
+        <h1>
+            Welcome,
+            {{ session["name"] }}!
+        </h1>
+
+
+        <p>
+
+            Manage disaster alerts, incidents,
+            shelters and emergency response teams
+            from one centralized platform.
+
+        </p>
+
+
+        <div class="dashboard-buttons">
+
+            <a
+                href="{{ url_for('report') }}"
+                class="btn primary"
+            >
+                Report Incident
+            </a>
+
+
+            <a
+                href="{{ url_for('alerts') }}"
+                class="btn secondary"
+            >
+                View Alerts
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-card">
+
+        <div class="status-row">
+
+            <strong>
+                System Status
+            </strong>
+
+            <span class="online">
+                ● Online
+            </span>
+
+        </div>
+
+
+        <h2>
+            24/7
+        </h2>
+
+
+        <p>
+            Emergency monitoring and coordination
+        </p>
+
+    </div>
+
+
+</section>
+
+
+
+<section class="section">
+
+
+    <div class="section-heading">
+
+        <p>
+            QUICK OVERVIEW
+        </p>
+
+        <h2>
+            Emergency Dashboard
+        </h2>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card red">
+
+            <span>🚨</span>
+
+            <h3>
+                Incidents
+            </h3>
+
+            <strong>
+                {{ incident_count }}
+            </strong>
+
+            <p>
+                Reported incidents
+            </p>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <span>📢</span>
+
+            <h3>
+                Alerts
+            </h3>
+
+            <strong>
+                {{ alert_count }}
+            </strong>
+
+            <p>
+                Emergency alerts
+            </p>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <span>🏠</span>
+
+            <h3>
+                Shelters
+            </h3>
+
+            <strong>
+                {{ shelter_count }}
+            </strong>
+
+            <p>
+                Relief shelters
+            </p>
+
+        </div>
+
+
+        <div class="stat-card blue">
+
+            <span>🚑</span>
+
+            <h3>
+                Teams
+            </h3>
+
+            <strong>
+                {{ team_count }}
+            </strong>
+
+            <p>
+                Response teams
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<section class="section two-column">
+
+
+    <div>
+
+        <div class="section-heading">
+
+            <p>
+                LIVE INFORMATION
+            </p>
+
+            <h2>
+                Current Alerts
+            </h2>
+
+        </div>
+
+
+        {% for alert in alerts %}
+
+
+        <div class="alert-card">
+
+
+            <span class="
+                severity
+                {{ alert['severity']|lower }}
+            ">
+
+                {{ alert["severity"] }}
+
+            </span>
+
+
+            <div>
+
+                <h3>
+                    {{ alert["title"] }}
+                </h3>
+
+                <p>
+                    {{ alert["message"] }}
+                </p>
+
+                <small>
+                    📍 {{ alert["location"] }}
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <div>
+
+
+        <div class="section-heading">
+
+            <p>
+                INCIDENT MANAGEMENT
+            </p>
+
+            <h2>
+                Recent Incidents
+            </h2>
+
+        </div>
+
+
+        {% for incident in recent_incidents %}
+
+
+        <div class="incident-card">
+
+
+            <div>
+
+                <strong>
+                    {{ incident["incident_type"] }}
+                </strong>
+
+                <p>
+                    {{ incident["location"] }}
+                </p>
+
+            </div>
+
+
+            <span class="
+                severity
+                {{ incident['severity']|lower }}
+            ">
+
+                {{ incident["severity"] }}
+
+            </span>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="empty-box">
+
+            No incidents have been reported yet.
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

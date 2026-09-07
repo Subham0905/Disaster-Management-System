@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Report Incident
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-banner">
+
+    <p class="eyebrow">
+        INCIDENT MANAGEMENT
+    </p>
+
+    <h1>
+        Report an Incident
+    </h1>
+
+    <p>
+        Provide accurate information about the emergency.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="form-card">
+
+
+        <form method="POST">
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Incident Type
+                    </label>
+
+                    <select
+                        name="incident_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select incident
+                        </option>
+
+                        <option>
+                            Flood
+                        </option>
+
+                        <option>
+                            Cyclone
+                        </option>
+
+                        <option>
+                            Earthquake
+                        </option>
+
+                        <option>
+                            Fire
+                        </option>
+
+                        <option>
+                            Landslide
+                        </option>
+
+                        <option>
+                            Other Emergency
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Enter incident location"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Severity
+                    </label>
+
+                    <select
+                        name="severity"
+                        required
+                    >
+
+                        <option value="">
+                            Select severity
+                        </option>
+
+                        <option>
+                            High
+                        </option>
+
+                        <option>
+                            Medium
+                        </option>
+
+                        <option>
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Reported By
+                    </label>
+
+                    <input
+                        type="text"
+                        value="{{ session['name'] }}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>
+                        Incident Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="6"
+                        placeholder="Describe the incident..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn primary"
+            >
+
+                Submit Incident Report
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

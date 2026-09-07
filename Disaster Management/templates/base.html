@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        {% block title %}
+        Disaster Management System
+        {% endblock %}
+
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="brand"
+    >
+
+        <div class="brand-icon">
+            ⚠
+        </div>
+
+
+        <div>
+
+            <strong>
+                Disaster Management System
+            </strong>
+
+            <small>
+                Emergency Response Platform
+            </small>
+
+        </div>
+
+    </a>
+
+
+    {% if session.get("user_id") %}
+
+
+    <nav>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('about') }}">
+            About
+        </a>
+
+        <a href="{{ url_for('alerts') }}">
+            Alerts
+        </a>
+
+        <a href="{{ url_for('incidents') }}">
+            Incidents
+        </a>
+
+        <a href="{{ url_for('report') }}">
+            Report
+        </a>
+
+        <a href="{{ url_for('shelters') }}">
+            Shelters
+        </a>
+
+        <a href="{{ url_for('teams') }}">
+            Teams
+        </a>
+
+
+        {% if session.get("role") == "admin" %}
+
+        <a href="{{ url_for('admin_monitoring') }}">
+            Admin
+        </a>
+
+        {% endif %}
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-link"
+        >
+            Logout
+        </a>
+
+    </nav>
+
+
+    {% else %}
+
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">
+            About
+        </a>
+
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+
+        <a href="{{ url_for('register') }}">
+            Register
+        </a>
+
+    </nav>
+
+
+    {% endif %}
+
+</header>
+
+
+<!-- =====================================================
+     FLASH MESSAGES
+===================================================== -->
+
+<div class="flash-container">
+
+    {% with messages =
+        get_flashed_messages(
+            with_categories=true
+        )
+    %}
+
+        {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+
+            {{ message }}
+
+        </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<!-- =====================================================
+     EMERGENCY ALERT POPUP
+===================================================== -->
+
+{% if session.get("user_id") %}
+
+
+<div
+    id="emergencyAlertOverlay"
+    class="emergency-alert-overlay"
+>
+
+
+    <div class="emergency-alert-popup">
+
+
+        <button
+            class="alert-close"
+            onclick="closeEmergencyAlert()"
+        >
+            ×
+        </button>
+
+
+        <div class="popup-alert-icon">
+            🚨
+        </div>
+
+
+        <div class="popup-alert-label">
+            EMERGENCY ALERT
+        </div>
+
+
+        <h2 id="popupAlertTitle">
+            Emergency Alert
+        </h2>
+
+
+        <div
+            id="popupAlertSeverity"
+            class="popup-severity"
+        >
+        </div>
+
+
+        <p id="popupAlertMessage">
+        </p>
+
+
+        <div class="popup-location">
+
+            📍
+
+            <span id="popupAlertLocation">
+            </span>
+
+        </div>
+
+
+        <div class="popup-time">
+
+            <span id="popupAlertTime">
+            </span>
+
+        </div>
+
+
+        <button
+            class="popup-ok-button"
+            onclick="closeEmergencyAlert()"
+        >
+
+            OK, GOT IT
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // =====================================================
+    // EMERGENCY ALERT SYSTEM
+    // =====================================================
+
+    let currentAlertId = null;
+
+
+    // =====================================================
+    // CHECK SERVER FOR NEW ALERT
+    // =====================================================
+
+    async function checkForEmergencyAlert() {
+
+        try {
+
+            const response = await fetch(
+                "{{ url_for('latest_alert') }}"
+            );
+
+
+            if (!response.ok) {
+
+                return;
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (!data.alert) {
+
+                return;
+
+            }
+
+
+            const alert =
+                data.alert;
+
+
+            const lastSeenAlert =
+                localStorage.getItem(
+                    "lastSeenEmergencyAlert"
+                );
+
+
+            if (
+                String(alert.id)
+                !==
+                String(lastSeenAlert)
+            ) {
+
+                showEmergencyAlert(alert);
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Alert checking error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // SHOW ALERT
+    // =====================================================
+
+    function showEmergencyAlert(alert) {
+
+        currentAlertId =
+            alert.id;
+
+
+        document.getElementById(
+            "popupAlertTitle"
+        ).textContent =
+            alert.title;
+
+
+        document.getElementById(
+            "popupAlertMessage"
+        ).textContent =
+            alert.message;
+
+
+        document.getElementById(
+            "popupAlertLocation"
+        ).textContent =
+            alert.location ||
+            "All Areas";
+
+
+        document.getElementById(
+            "popupAlertTime"
+        ).textContent =
+            alert.created_at;
+
+
+        const severityElement =
+            document.getElementById(
+                "popupAlertSeverity"
+            );
+
+
+        severityElement.textContent =
+            alert.severity +
+            " PRIORITY";
+
+
+        severityElement.classList.remove(
+            "high",
+            "medium",
+            "low"
+        );
+
+
+        severityElement.classList.add(
+            alert.severity.toLowerCase()
+        );
+
+
+        document.getElementById(
+            "emergencyAlertOverlay"
+        ).classList.add(
+            "show"
+        );
+
+
+        playAlertSound();
+
+    }
+
+
+    // =====================================================
+    // CLOSE ALERT
+    // =====================================================
+
+    function closeEmergencyAlert() {
+
+        document.getElementById(
+            "emergencyAlertOverlay"
+        ).classList.remove(
+            "show"
+        );
+
+
+        if (currentAlertId !== null) {
+
+            localStorage.setItem(
+                "lastSeenEmergencyAlert",
+                currentAlertId
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // ALERT SOUND
+    // =====================================================
+
+    function playAlertSound() {
+
+        try {
+
+            const AudioContext =
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+
+            if (!AudioContext) {
+
+                return;
+
+            }
+
+
+            const audioContext =
+                new AudioContext();
+
+
+            const oscillator =
+                audioContext.createOscillator();
+
+
+            const gain =
+                audioContext.createGain();
+
+
+            oscillator.connect(gain);
+
+            gain.connect(
+                audioContext.destination
+            );
+
+
+            oscillator.frequency.value =
+                800;
+
+
+            gain.gain.value =
+                0.08;
+
+
+            oscillator.start();
+
+
+            setTimeout(
+                function () {
+
+                    oscillator.stop();
+
+                    audioContext.close();
+
+                },
+                500
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Alert sound unavailable."
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // INITIAL CHECK
+    // =====================================================
+
+    checkForEmergencyAlert();
+
+
+    // =====================================================
+    // CHECK EVERY 5 SECONDS
+    // =====================================================
+
+    setInterval(
+        checkForEmergencyAlert,
+        5000
+    );
+
+</script>
+
+
+{% endif %}
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <div>
+
+            <h3>
+                Disaster Management System
+            </h3>
+
+            <p>
+                Improving communication and coordination
+                during disaster situations.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>
+                Emergency Numbers
+            </h4>
+
+            <p>
+                National Emergency:
+                <strong>112</strong>
+            </p>
+
+            <p>
+                Police:
+                <strong>100</strong>
+            </p>
+
+            <p>
+                Fire:
+                <strong>101</strong>
+            </p>
+
+            <p>
+                Ambulance:
+                <strong>108</strong>
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 Disaster Management System
+        | ITPM Project
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>
