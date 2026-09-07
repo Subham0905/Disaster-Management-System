@@ -1,6 +1,6 @@
 # Disaster-Management-System
 
-#### 1. Project Overview
+### 1. Project Overview
 
 The Disaster Management System is a web-based application developed as part of the Information Technology Project Management (ITPM) academic project. The main purpose of the system is to provide a centralized platform for managing and communicating important information during disaster situations. The application allows users to report disaster incidents, view emergency alerts, access information about emergency shelters, and view available disaster response teams. Administrators can monitor incidents, publish and remove emergency alerts, update incident statuses, and monitor registered users.
 
